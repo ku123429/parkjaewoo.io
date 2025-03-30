@@ -1,12 +1,60 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>Result</title>
-	</head>
-	<body><h1>YEAH SANDWICHES</h1>
-	<img src="http://bit.ly/RhrMEn" />
-		<p>I like eggs.</p>
-		<p>And ham!</p>
-		<p>But mostly sandwiches.</p>
-	</body>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>YouTube 영상 미리보기</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    input {
+      width: 400px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      margin-left: 10px;
+    }
+    iframe {
+      margin-top: 20px;
+      width: 100%;
+      max-width: 800px;
+      height: 450px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>debut 전용유튜브</h2>
+  <input type="text" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=영상ID">
+  <button onclick="showVideo()">영상 보기</button>
+
+  <div id="videoContainer"></div>
+
+  <script>
+    function showVideo() {
+      const url = document.getElementById('youtubeUrl').value;
+      const videoId = extractYouTubeID(url);
+
+      if (videoId) {
+        const iframe = `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>`;
+        document.getElementById('videoContainer').innerHTML = iframe;
+      } else {
+        alert("유효한 유튜브 주소를 입력해주세요");
+      }
+    }
+
+    // 유튜브 주소에서 영상 ID 추출 함수
+    function extractYouTubeID(url) {
+      const regex = /(?:youtube\.com.*[?&]v=|youtu\.be\/)([^&\n?#]+)/;
+      const match = url.match(regex);
+      return match ? match[1] : null;
+    }
+  </script>
+
+</body>
 </html>
